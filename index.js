@@ -16,14 +16,36 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-	console.log('Ready!');
-});
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if(event.once){
+		client.once(event.name, async(...args) => {
+			try {
+				await event.execute(...args);
+			}
+			catch(error) {
+				console.log(`ERROR: ${error}`);
+			// somehow reply to the user that made the interaction that you failed
+			}
+		});
+	}
+	else{
+		client.on(event.name, async(...args) => {
+			try {
+				await event.execute(...args);
+			}
+			catch(error){
+				console.log(`ERROR: ${error}`);
+			}
+		})
+	}
+}
+//perform the command now
 client.on('interactionCreate', async interaction => {
     if(!interaction.isCommand()) return; //not command? then turn.
-
+	
 	const command = client.commands.get(interaction.commandName);
 	if(!command)
 		return;
