@@ -14,7 +14,7 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.data[0].value;
-        let regex = [/ls/, /mkdir/, /cd/, /pwd/];
+        let regex = [/ls/, /mkdir/, /cd/, /pwd/, /\.\./];
         for(let rt of regex) {
             if(rt.exec(input) !== null) {
                 await interaction.reply("Access denied");
