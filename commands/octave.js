@@ -14,7 +14,7 @@ module.exports = {
 
     async execute(interaction) {
         let input = interaction.options.data[0].value;
-        let regex = [/ls/, /mkdir/, /cd/, /pwd/, /\.\./];
+        let regex = [/ls/, /mkdir/, /cd/, /pwd/, /\.\./, /.*\/.*\.(jpg|png)/, /edit/, /movefile/, /.*link/, /rmdir/, /mkfifo/, /umask/, /.stat/, /isdir/, /readdir/, /file_in_path/, /recycle/, /delete/, /glob/, /copyfile/, /rename/];
         for(let rt of regex) {
             if(rt.exec(input) !== null) {
                 await interaction.reply("Access denied");
@@ -22,7 +22,7 @@ module.exports = {
                 return;
             }
         }
-        const child = exec(`octave --eval '${interaction.options.data[0].value}'`, async function (error, stdout, stderr) {
+        const child = exec(`octave --eval '${input}'`, async function (error, stdout, stderr) {
             if (error) {
                 console.log(error.stack);
                 console.log('Error code: ' + error.code);
