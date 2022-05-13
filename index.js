@@ -56,7 +56,7 @@ client.on('interactionCreate', async interaction => {
 	catch (error) {
 		console.log(error);
 		await interaction.reply({
-			content: "i fked up sorri",
+			content: "Failure detected",
 			ephemeral: true
 		});
 	}

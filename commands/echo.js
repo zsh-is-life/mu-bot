@@ -9,6 +9,6 @@ module.exports  = {
 			.setDescription('The input to echo back')
 			.setRequired(true)),
     async execute(interaction) { //interaction is CommandInteraction type
-        interaction.reply(interaction.options.data[0].value);
+        await interaction.reply(interaction.options.data[0].value);
     }
 };
